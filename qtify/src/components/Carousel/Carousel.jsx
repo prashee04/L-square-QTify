@@ -33,7 +33,9 @@ function Carousel({ data, renderComponent }) {
           <CarouselRightNavigation />
         </div>
         {data.map((ele, idx) => (
-          <SwiperSlide key={ele.slug ?? idx}>{renderComponent(ele)}</SwiperSlide>
+          <SwiperSlide key={ele.slug ?? idx} data-testid={`slide-${idx}`}>
+            {renderComponent(ele)}
+          </SwiperSlide>
         ))}
       </Swiper>
     </div>

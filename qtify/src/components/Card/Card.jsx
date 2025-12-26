@@ -11,7 +11,7 @@ function Card({ data, type }) {
         return (
           <Tooltip title={`${songs.length} songs`} placement="top" arrow>
             <Link to={`/album/${slug}`}>
-              <div className={styles.wrapper}>
+              <div className={styles.wrapper} data-testid={`album-${slug}`}>
                 <div className={styles.card}>
                   <img src={image} alt="album" loading="lazy" />
                   <div className={styles.banner}>
