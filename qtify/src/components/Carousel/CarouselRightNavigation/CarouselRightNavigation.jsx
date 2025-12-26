@@ -5,17 +5,25 @@ import { ReactComponent as RightArrow } from "../../../assets/RightArrow.svg";
 
 export default function CarouselRightNavigation() {
   const swiper = useSwiper();
-  const [isEnd, setIsEnd] = useState(swiper.isEnd);
+  const [isEnd, setIsEnd] = useState(() => (swiper ? swiper.isEnd : false));
 
-  // useEffect(() => {
-  //   swiper.on("slideChange", function () {
-  //     setIsEnd(swiper.isEnd);
-  //   });
-  // }, []);
+  useEffect(() => {
+    if (!swiper) return;
 
-  swiper.on("slideChange", function () {
+    const handler = () => setIsEnd(swiper.isEnd);
+    swiper.on("slideChange", handler);
+
+    // sync initial state
     setIsEnd(swiper.isEnd);
-  });
+
+    return () => {
+      try {
+        swiper.off("slideChange", handler);
+      } catch (e) {
+        // defensive: some Swiper versions may not have off
+      }
+    };
+  }, [swiper]);
 
   return (
     <div className={styles.rightNavigation}>
